@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="squirrel:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="squirrel.war">
+      <element id="artifact" artifact-name="squirrel:war exploded" />
+    </root>
+  </artifact>
+</component>
