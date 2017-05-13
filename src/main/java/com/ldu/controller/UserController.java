@@ -1,20 +1,23 @@
 package com.ldu.controller;
 
 import com.ldu.pojo.Goods;
+import com.ldu.pojo.GoodsExtend;
 import com.ldu.pojo.User;
 import com.ldu.service.GoodsService;
+import com.ldu.service.ImageService;
 import com.ldu.util.DateUtil;
 import com.ldu.util.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
+import com.ldu.pojo.Image;
 import com.ldu.service.UserService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +29,8 @@ public class UserController {
     private UserService userService;
     @Resource
     private GoodsService goodsService;
+    @Resource
+    private ImageService imageService;
 
     /**
      * 用户注册
@@ -135,16 +140,30 @@ public class UserController {
 
     /**
      * 我的闲置
-     * @return
+     * 需要传入一个用户的id，然后查询出所有的用户商品以及商品对应的图片
+     * @param userId
+     * @return  返回的model为 goodsAndImage对象,该对象中包含goods 和 images，参考相应的类
      */
     @RequestMapping(value = "/goods")
-    public ModelAndView goods() {
-        List<Goods> goodsList = goodsService.getAllGoods();
-        System.out.println("goodsList:"+goodsList.size());
+    public ModelAndView goods(Integer userId) {
+        List<Goods> goodsList = goodsService.getGoodsByUserId(userId);
+        List<GoodsExtend> goodsAndImage = new ArrayList<GoodsExtend>();
+        for (int i = 0; i < goodsList.size() ; i++) {
+            //将用户信息和image信息封装到GoodsExtend类中，传给前台
+            GoodsExtend goodsExtend = new GoodsExtend();
+            Goods goods = goodsList.get(i);
+            List<Image> images = imageService.getImagesByGoodsPrimaryKey(goods.getId());
+            goodsExtend.setGoods(goods);
+            goodsExtend.setImages(images);
+            goodsAndImage.add(i, goodsExtend);
+            System.out.println("goods : " + goods.getName() + "\t goodId:" + goods.getId());
+            System.out.println("ImageUrl: " + images.get(0).getImgUrl());
+        }
         ModelAndView mv = new ModelAndView();
-        mv.addObject("goodsList",goodsList);
+        mv.addObject("goodsAndImage",goodsAndImage);
         mv.setViewName("/user/goods");
         return mv;
     }
+
 
 }

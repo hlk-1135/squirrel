@@ -15,12 +15,15 @@
     img_url
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from image
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByGoodsPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+    select * from image where goods_id = #{goodsId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from image

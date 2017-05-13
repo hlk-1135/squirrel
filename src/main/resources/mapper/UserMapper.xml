@@ -157,7 +157,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateGoodsNum" parameterType="Integer" >
-    update user
+    update user set
     goods_num = goods_num+1
     where id = #{id,jdbcType=INTEGER}
   </update>

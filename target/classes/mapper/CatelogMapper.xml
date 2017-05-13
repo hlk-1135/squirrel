@@ -85,4 +85,8 @@
       status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateCatelogNum" parameterType="Integer" >
+    update catelog
+    set number = number +1 where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

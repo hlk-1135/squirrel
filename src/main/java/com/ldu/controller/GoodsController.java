@@ -14,6 +14,7 @@ import com.ldu.pojo.Image;
 import com.ldu.pojo.User;
 import com.ldu.service.CatelogService;
 import com.ldu.service.ImageService;
+import com.ldu.service.UserService;
 import com.sun.tracing.dtrace.Attributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,8 @@ public class GoodsController {
     private ImageService imageService;
     @Autowired
     private CatelogService catelogService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 首页显示商品，每一类商品查询6件，根据最新上架排序 key的命名为catelogGoods1、catelogGoods2....
@@ -136,7 +139,6 @@ public class GoodsController {
 
         return null;
     }
-
     /**
      * 发布商品
      *
@@ -169,12 +171,14 @@ public class GoodsController {
         int i = goodsService.addGood(goods,10);//在goods表中插入物品
         //返回插入的该物品的id
         int goodsId = goods.getId();
-        System.out.println(ima.getImgUrl());
         ima.setGoodsId(goodsId);
         imageService.insert(ima);//在image表中插入商品图片
-        //发布商品后，catlog的number+1，user表的goods_num+1
+        //发布商品后，catlog的number+1，user表的goods_num+1，更新session的值
         Integer calelog_id = goods.getCatelogId();
         catelogService.updateCatelogNum(calelog_id);
+        userService.updateGoodsNum(cur_user.getId());
+        cur_user.setGoodsNum(cur_user.getGoodsNum()+1);
+        request.getSession().setAttribute("cur_user",cur_user);//修改session值
         checkUpIsOk(i,response);
     }
 
@@ -217,7 +221,6 @@ public class GoodsController {
         if(myfile!=null && oldFileName!=null && oldFileName.length()>0){
             //新的图片名称
             String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
-            System.out.println("newFileName:"+newFileName);
             //新图片
             File newFile = new File(file_path+"/"+newFileName);
             //将内存中的数据写入磁盘

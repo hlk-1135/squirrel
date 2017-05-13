@@ -1,5 +1,7 @@
 package com.ldu.dao;
 
+import java.util.List;
+
 import com.ldu.pojo.Image;
 
 public interface ImageMapper {
@@ -16,4 +18,6 @@ public interface ImageMapper {
     int updateByPrimaryKeyWithBLOBs(Image record);
 
     int updateByPrimaryKey(Image record);
+
+    List<Image> selectByGoodsPrimaryKey(Integer goodsId);
 }
