@@ -10,6 +10,8 @@
 <head>
     <meta charset="UTF-8">
     <title>个人中心</title>
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/emoji.css" />
     <link rel="stylesheet" href="../css/userhome.css" />
     <link rel="stylesheet" href="../css/user.css" />
 
@@ -36,30 +38,24 @@
                 <div class="head_img">
                     <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/images/default_headImg.png">
                 </div>
-                <div class="cfile">
-							<span class="cfilesp">
-								<a class="btn btn-hollow">
-									<input class="hide" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" multiple/>更改头像
-								</a>
-							</span>
-                </div>
                 <div class="big_headimg">
                     <img src="">
                 </div>
-                <span class="name">${cur_user.username}</span>
+                <span class="name">${cur_urser.username}</span>
                 <span class="school">鲁东大学</span>
-                <span class="name">闲置数量：${cur_user.goodsNum}</span>
+                <span class="text">向我比心</span>
+                <span class="fa fa-share-alt">"快去分享一下"</span>
             </div>
             <div class="home_nav">
                 <ul>
                     <li class="notice">
                         <div></div>
-                        <span>我的消息</span>
+                        <span><a>我的消息</a></span>
                         <strong></strong>
                     </li>
                     <li class="fri">
                         <div></div>
-                        <span>好友列表</span>
+                        <span><a href="/goods/goodsInfo">测试</a></span>
                         <strong></strong>
                     </li>
                     <li class="set">
@@ -69,12 +65,12 @@
                     </li>
                     <li class="store">
                         <div></div>
-                        <span>我的店铺</span>
+                        <span><a href="/goods/publishGoods">发布物品</a></span>
                         <strong></strong>
                     </li>
                     <li class="second">
                         <div></div>
-                        <span>我的闲置</span>
+                        <span><a href="/user/goods">我的闲置</a></span>
                         <strong></strong>
                     </li>
                 </ul>
@@ -86,28 +82,39 @@
             描述：右侧内容区域
         -->
         <div id="user_content">
-            <div class="basic">
-                <form>
-                    <h1>完善与修改个人信息</h1><hr />
-                    <div class="changeinfo">
-                        <span>昵称：</span>
-                        <input class="in_info" type="text" name="username" placeholder="请输入昵称" value="${cur_user.username}"/>
-                    </div><hr />
-                    <div class="changeinfo">
-                        <span>开通时间：</span>
-                        <input class="in_info" type="text" name="createAt" value="${cur_user.createAt}" readonly="true"/>
-                    </div><hr />
-                    <div class="changeinfo">
-                        <span>手机号码：</span>
-                        <input class="in_info" type="text" name="phone" value="${cur_user.phone}" readonly="true"/>
-                        <span id="checkphone">已验证</span>
-                    </div><hr />
-                    <div class="changeinfo">
-                        <span>QQ：</span>
-                        <input class="in_info" type="text" name="qq" placeholder="请输入QQ" value="${cur_user.qq}"/>
+            <div class="share">
+                <div class="publish">
+                    <div class="pub_content">
+                        <div class="text_pub lead emoji-picker-container">
+                            <input type="text" name="text" data-emojiable="converted" class="form-control" data-type="original-input" style="display: none;"/>
+                            <div class="emoji-wysiwyg-editor form-control" data-type="input" contenteditable="true"></div>
+                            <i class="emoji-picker-icon emoji-picker face" data-type="picker"></i>
+                            <div class="tag"></div>
+                        </div>
+                        <div class="img_pub">
+                            <ul></ul>
+                        </div>
                     </div>
-                    <input type="submit" class="setting-save" value="保存修改信息" />
-                </form>
+                    <div class="button">
+								<span class="fa fa-image">
+									::before
+									<input type="file" accept="image/gif,image/jpeg,image/jpg,image/png" multiple/>
+								</span>
+                        <div class="checkbox">
+                            <button>发 布</button>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                    作者：hlk_1135@outlook.com
+                    时间：2017-05-11
+                    描述：闲置商品展示
+                -->
+                <div class="share_content">
+                    <div class="no_share">
+                        <span>没有任何内容，去逛逛其它的吧！</span>
+                    </div>
+                </div>
             </div>
             <!--
                 作者：hlk_1135@outlook.com

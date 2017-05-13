@@ -41,6 +41,7 @@
     <mvc:resources location="/js/"  mapping="/js/**" />
     <mvc:resources location="/css/"  mapping="/css/**" />
     <mvc:resources location="/img/"  mapping="/img/**" />
+    <mvc:resources location="/fonts/"  mapping="/fonts/**" />
     <mvc:resources location="/WEB-INF/pages/error/" mapping="/WEB-INF/pages/error/**"/> 
     <mvc:resources location="/upload/" mapping="/upload/**"/> 
     <!-- 视图解析器 -->
@@ -49,6 +50,12 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
     <!-- 文件上传 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- 文件上传 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为5MB -->
+        <property name="maxUploadSize">
+            <value>5242880</value>
+        </property>
     </bean>
 </beans>

@@ -16,4 +16,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User getUserByPhone(String phone);//通过手机号查询用户
+
+    int updateGoodsNum(Integer id);//更改用户的商品数量
 }

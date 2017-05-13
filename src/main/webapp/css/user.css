@@ -1,18 +1,17 @@
 .basic {
-	float: left;
+    float: left;
     width: 550px;
-    height: 500px;
     margin: 40px 0 0 100px;
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
 }
 .basic h1 {
-	margin-left: 140px;
-	padding-bottom: 5px;
+    margin-left: 140px;
+    padding-bottom: 5px;
 }
 .setting-title {
-	font-size: 15px;
+    font-size: 15px;
     color: #969696;
 }
 .setted div {
@@ -20,25 +19,25 @@
     display: inline-block;
 }
 .changeinfo {
-	margin-top: 30px;
-	width: 100%;
-	height: 50px;
+    margin-top: 30px;
+    width: 100%;
+    height: 50px;
 }
 .changeinfo span {
-	position: absolute;
-	float: left;
-	margin-top: 5px;
-	margin-left: 70px;
-	font-size: 15px;
+    position: absolute;
+    float: left;
+    margin-top: 5px;
+    margin-left: 70px;
+    font-size: 15px;
     color: #969696;
-    
+
 }
 #checkphone {
-	margin-left: 10px;
-	color: #3db922;
+    margin-left: 10px;
+    color: #3db922;
 }
 .setting-save {
-	width: 100px;
+    width: 100px;
     margin: 10px 50px 60px 160px;
     border-radius: 4px;
     border: none;
@@ -47,26 +46,26 @@
     padding: 10px 10px;
 }
 .setting-save:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 .in_info {
-	position: relative;
-	float: left;
-	margin-left: 170px;
-	padding: 5px 10px;
+    position: relative;
+    float: left;
+    margin-left: 170px;
+    padding: 5px 10px;
     font-size: 15px;
     border: 1px solid #c8c8c8;
     border-radius: 4px;
     background-color: hsla(0,0%,71%,.1);
 }
 .basic .ph {
-	width: 100%;
-	height: 100px;
-	
-	background: red;
+    width: 100%;
+    height: 100px;
+
+    background: red;
 }
 .basic .ph .photo {
-	width: 80px;
+    width: 80px;
     height: 80px;
     border-radius: 40px;
     margin-top: 20px;
@@ -76,13 +75,13 @@
     background: cyan;
 }
 .basic .ph .photo img {
-	width: 100%;
+    width: 100%;
 }
 .cfile {
-	margin-left: 65px;
+    margin-left: 65px;
 }
 .btn-hollow {
-	padding: 5px 2px;
+    padding: 5px 2px;
     border: 1px solid rgba(59,194,29,.7);
     color: #42c02e!important;
     font-size: 14px;
@@ -96,7 +95,7 @@
     cursor: pointer;
 }
 .hide {
-	position: absolute;
+    position: absolute;
     display: block!important;
     width: 82px;
     opacity: 0;
@@ -104,7 +103,7 @@
     line-height: inherit;
 }
 .name {
-	display: block;
+    display: block;
     width: 160px;
     text-align: center;
     height: 30px;
@@ -115,10 +114,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
-    color: #999;
 }
 .school {
-	display: block;
+    display: block;
     width: 160px;
     text-align: center;
     color: #999;
@@ -129,4 +127,47 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.home_nav ul li:hover {
+    background-color: cyan;
+}
+.interact span a {
+    color: #939cac;;
+}
+.interact span a:hover {
+    color: deepskyblue;
+}
+.sha {
+    float: left;
+    width: 400px;
+    margin-left: 100px;
+    margin: 40px 0 0 100px;
+}
+.sha .publ {
+    width: 400px;
+    margin-left: 70px;
+    margin-top: -30px;
+    background-color: #fff;
+    box-shadow: 7px 7px 20px 0 #e8e9eb;
+}
+.sha .publ .pub_con {
+    position: relative;
+}
+.sha .publ .text_pu {
+    width: 400px;
+    padding: 10px 20px;
+}
+.sha .publ .text_pu .emoji-wysiwyg-editor {
+    position: relative;
+    z-index: 2;
+    outline: 0;
+    width: 380px;
+    min-height: 100px;
+    line-height: 25px;
+    color: #333;
+    font-size: 16px;
+    font-family: "Avenir Next",Avenir,"Helvetica Neue",Helvetica,"Lantinghei SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif;
+}
+#dir {
+    height: 100px;
 }

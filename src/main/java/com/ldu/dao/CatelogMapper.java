@@ -17,6 +17,8 @@ public interface CatelogMapper {
 
     int updateByPrimaryKey(Catelog record);
 
+    int updateCatelogNum(Integer id);
+
     List<Catelog> getAllCatelog();//根据商品类别查询商品
 
     int getCount(Catelog catelog);

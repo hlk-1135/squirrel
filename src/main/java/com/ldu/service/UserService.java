@@ -6,4 +6,5 @@ public interface UserService {
     public void addUser(User user);
     public User getUserByPhone(String phone);
     public void updateUserName(User user);
+    int updateGoodsNum(Integer id);
 }

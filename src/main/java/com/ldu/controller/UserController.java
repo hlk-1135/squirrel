@@ -1,6 +1,8 @@
 package com.ldu.controller;
 
+import com.ldu.pojo.Goods;
 import com.ldu.pojo.User;
+import com.ldu.service.GoodsService;
 import com.ldu.util.DateUtil;
 import com.ldu.util.MD5;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @Controller
@@ -21,11 +24,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
-
-    @RequestMapping(value = "/")
-    public String index() {
-        return "index";
-    }
+    @Resource
+    private GoodsService goodsService;
 
     /**
      * 用户注册
@@ -42,9 +42,9 @@ public class UserController {
             user1.setCreateAt(t);//创建开始时间
             user1.setPassword(str);
             userService.addUser(user1);
-            return "redirect:/";
+            return "redirect:/goods/homeGoods";
         }
-        return "redirect:/";
+        return "redirect:/goods/homeGoods";
     }
 
     /**
@@ -63,10 +63,10 @@ public class UserController {
             String pwd = MD5.md5(user.getPassword());
             if(pwd.equals(cur_user.getPassword())) {
                 request.getSession().setAttribute("cur_user",cur_user);
-                return new ModelAndView("redirect:/");
+                return new ModelAndView("redirect:/goods/homeGoods");
             }
         }
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/goods/homeGoods");
     }
 
     /**
@@ -83,8 +83,16 @@ public class UserController {
         cur_user.setUsername(user.getUsername());//更改当前用户的用户名
         userService.updateUserName(cur_user);//执行修改操作
         request.getSession().setAttribute("cur_user",cur_user);//修改session值
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/goods/homeGoods");
     }
+
+    /**
+     * 完善或修改信息
+     * @param request
+     * @param user
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "/updateInfo")
     public ModelAndView updateInfo(HttpServletRequest request,User user,ModelMap modelMap) {
         //从session中获取出当前用户
@@ -103,7 +111,7 @@ public class UserController {
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().setAttribute("cur_user",null);
-        return "redirect:/";
+        return "redirect:/goods/homeGoods";
     }
 
 
@@ -123,6 +131,20 @@ public class UserController {
     @RequestMapping(value = "/basic")
     public String basic() {
         return "/user/basic";
+    }
+
+    /**
+     * 我的闲置
+     * @return
+     */
+    @RequestMapping(value = "/goods")
+    public ModelAndView goods() {
+        List<Goods> goodsList = goodsService.getAllGoods();
+        System.out.println("goodsList:"+goodsList.size());
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("goodsList",goodsList);
+        mv.setViewName("/user/goods");
+        return mv;
     }
 
 }

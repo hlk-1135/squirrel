@@ -69,12 +69,12 @@
                     </li>
                     <li class="store">
                         <div></div>
-                        <span>我的店铺</span>
+                        <span>发布物品</span>
                         <strong></strong>
                     </li>
                     <li class="second">
                         <div></div>
-                        <span>我的闲置</span>
+                        <span><a href="/user/goods">我的闲置</a></span>
                         <strong></strong>
                     </li>
                 </ul>

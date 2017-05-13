@@ -11,37 +11,56 @@
     <result column="start_time" property="startTime" jdbcType="VARCHAR" />
     <result column="end_time" property="endTime" jdbcType="VARCHAR" />
     <result column="commet_num" property="commetNum" jdbcType="INTEGER" />
+    <result column="polish_time" property="polishTime" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.ldu.pojo.Goods" extends="BaseResultMap" >
-    <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
+    <result column="describle" property="describle" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, catelog_id, user_id, name, price, real_price, start_time, end_time, commet_num
+    id, catelog_id, user_id, name, price, real_price, start_time, polish_time, end_time, commet_num
   </sql>
   <sql id="Blob_Column_List" >
     desc
   </sql>
+  <sql id="Factor">
+    and end_time >= now() order by polish_time
+  </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+    select
+    *
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByCatelog" resultMap="ResultMapWithBLOBs">
+    select * from goods where catelog_id = #{catelog_id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllGoods" resultMap="ResultMapWithBLOBs">
+    select * from goods
+  </select>
+  <select id="getGoodsByUserId" resultMap="ResultMapWithBLOBs">
+    select * from goods where user_id = #{user_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCatelogOrderByDate" resultMap="ResultMapWithBLOBs">
+    select * from goods
+    where catelog_id = #{catelogId,jdbcType=INTEGER}
+    <include refid="Factor"></include>
+    limit #{limit,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from goods
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ldu.pojo.Goods" >
-    insert into goods (id, catelog_id, user_id, 
-      name, price, real_price, start_time, 
-      end_time, commet_num, desc
-      )
-    values (#{id,jdbcType=INTEGER}, #{catelogId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{realPrice,jdbcType=REAL}, #{startTime,jdbcType=VARCHAR}, 
-      #{endTime,jdbcType=VARCHAR}, #{commetNum,jdbcType=INTEGER}, #{desc,jdbcType=LONGVARCHAR}
-      )
+
+  <insert id="insert" parameterType="com.ldu.pojo.Goods" useGeneratedKeys="true" keyProperty="id">
+    insert into goods (id, catelog_id, user_id,
+    name, price, real_price, start_time,
+    end_time, polish_time, commet_num, describle)
+    values (#{id,jdbcType=INTEGER}, #{catelogId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+    #{name,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{realPrice,jdbcType=REAL}, #{startTime,jdbcType=VARCHAR},
+    #{endTime,jdbcType=VARCHAR}, #{polishTime,jdbcType=VARCHAR}, #{commetNum,jdbcType=INTEGER}, #{describle,jdbcType=LONGVARCHAR}
+    )
   </insert>
   <insert id="insertSelective" parameterType="com.ldu.pojo.Goods" >
     insert into goods
@@ -70,11 +89,14 @@
       <if test="endTime != null" >
         end_time,
       </if>
+      <if test="polishTime != null" >
+        polish_time,
+      </if>
       <if test="commetNum != null" >
         commet_num,
       </if>
-      <if test="desc != null" >
-        desc,
+      <if test="describle != null" >
+        describle,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -102,11 +124,14 @@
       <if test="endTime != null" >
         #{endTime,jdbcType=VARCHAR},
       </if>
+      <if test="endTime != null" >
+        #{polishTime,jdbcType=VARCHAR},
+      </if>
       <if test="commetNum != null" >
         #{commetNum,jdbcType=INTEGER},
       </if>
-      <if test="desc != null" >
-        #{desc,jdbcType=LONGVARCHAR},
+      <if test="describle != null" >
+        #{describle,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -134,11 +159,14 @@
       <if test="endTime != null" >
         end_time = #{endTime,jdbcType=VARCHAR},
       </if>
+      <if test="endTime != null" >
+        polish_time = #{polishTime,jdbcType=VARCHAR},
+      </if>
       <if test="commetNum != null" >
         commet_num = #{commetNum,jdbcType=INTEGER},
       </if>
-      <if test="desc != null" >
-        desc = #{desc,jdbcType=LONGVARCHAR},
+      <if test="describle != null" >
+        describle = #{describle,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -152,8 +180,9 @@
       real_price = #{realPrice,jdbcType=REAL},
       start_time = #{startTime,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=VARCHAR},
+      polish_time = #{polishTime,jdbcType=VARCHAR},
       commet_num = #{commetNum,jdbcType=INTEGER},
-      desc = #{desc,jdbcType=LONGVARCHAR}
+      describle = #{describle,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ldu.pojo.Goods" >
@@ -165,7 +194,9 @@
       real_price = #{realPrice,jdbcType=REAL},
       start_time = #{startTime,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=VARCHAR},
-      commet_num = #{commetNum,jdbcType=INTEGER}
+      polish_time = #{polishTime,jdbcType=VARCHAR},
+      commet_num = #{commetNum,jdbcType=INTEGER},
+      describle = #{describle,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

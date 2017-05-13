@@ -17,9 +17,11 @@ public class Goods {
 
     private String endTime;
 
+    private String polishTime;
+
     private Integer commetNum;
 
-    private String desc;
+    private String describle;
 
     public Integer getId() {
         return id;
@@ -93,11 +95,19 @@ public class Goods {
         this.commetNum = commetNum;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescrible() {
+        return describle;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescrible(String describle) {
+        this.describle = describle == null ? null : describle.trim();
+    }
+
+    public String getPolishTime() {
+        return polishTime;
+    }
+
+    public void setPolishTime(String polishTime) {
+        this.polishTime = polishTime;
     }
 }

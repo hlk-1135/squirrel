@@ -26,4 +26,7 @@ public class UserServiceImpl implements UserService {
         userMapper.updateByPrimaryKey(user);
     }
 
+    public int updateGoodsNum(Integer id) {
+        return userMapper.updateGoodsNum(id);
+    }
 }
