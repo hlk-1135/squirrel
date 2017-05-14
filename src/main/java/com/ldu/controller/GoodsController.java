@@ -163,7 +163,7 @@ public class GoodsController {
      * @throws Exception
      */
     @RequestMapping(value = "/publishGoodsSubmit")
-    public void publishGoodsSubmit(HttpServletRequest request,HttpServletResponse response,Image ima,Goods goods,MultipartFile image)
+    public String publishGoodsSubmit(HttpServletRequest request,HttpServletResponse response,Image ima,Goods goods,MultipartFile image)
             throws Exception {
         //查询出当前用户cur_user对象，便于使用id
         User cur_user = (User)request.getSession().getAttribute("cur_user");
@@ -179,7 +179,7 @@ public class GoodsController {
         userService.updateGoodsNum(cur_user.getId());
         cur_user.setGoodsNum(cur_user.getGoodsNum()+1);
         request.getSession().setAttribute("cur_user",cur_user);//修改session值
-        checkUpIsOk(i,response);
+        return "redirect:/user/allGoods";
     }
 
     @RequestMapping(value = "/goodsInfo")
@@ -189,25 +189,6 @@ public class GoodsController {
         modelAndView.addObject("goods",goods);
         modelAndView.setViewName("/goods/detailGoods");
         return modelAndView;
-    }
-    //用于插入是否成功
-    public void checkUpIsOk(int i,HttpServletResponse response) throws IOException {
-        response.setHeader("content-type", "text/html;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();//获取PrintWriter输出流
-        if(i==0){
-            out.write("Sorry，发布失败");
-            out.write("<script>setTimeout(function(){"+
-                    "history.go(-1);"+
-                    "},500) </script>");
-            out.close();
-        }else{
-            out.write("恭喜你，发布成功");
-            out.write("<script>setTimeout(function(){"+
-                    "location.href='/user/goods'"+
-                    "},500) </script>");
-            out.close();
-        }
     }
     //uploadFile
     @ResponseBody

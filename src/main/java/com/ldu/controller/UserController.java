@@ -46,6 +46,7 @@ public class UserController {
             String str = MD5.md5(user1.getPassword());
             user1.setCreateAt(t);//创建开始时间
             user1.setPassword(str);
+            user1.setGoodsNum(0);
             userService.addUser(user1);
             return "redirect:/goods/homeGoods";
         }
@@ -140,12 +141,13 @@ public class UserController {
 
     /**
      * 我的闲置
-     * 需要传入一个用户的id，然后查询出所有的用户商品以及商品对应的图片
-     * @param userId
+     * 查询出所有的用户商品以及商品对应的图片
      * @return  返回的model为 goodsAndImage对象,该对象中包含goods 和 images，参考相应的类
      */
-    @RequestMapping(value = "/goods")
-    public ModelAndView goods(Integer userId) {
+    @RequestMapping(value = "/allGoods")
+    public ModelAndView goods(HttpServletRequest request) {
+        User cur_user = (User)request.getSession().getAttribute("cur_user");
+        Integer userId = cur_user.getId();
         List<Goods> goodsList = goodsService.getGoodsByUserId(userId);
         List<GoodsExtend> goodsAndImage = new ArrayList<GoodsExtend>();
         for (int i = 0; i < goodsList.size() ; i++) {
@@ -156,14 +158,10 @@ public class UserController {
             goodsExtend.setGoods(goods);
             goodsExtend.setImages(images);
             goodsAndImage.add(i, goodsExtend);
-            System.out.println("goods : " + goods.getName() + "\t goodId:" + goods.getId());
-            System.out.println("ImageUrl: " + images.get(0).getImgUrl());
         }
         ModelAndView mv = new ModelAndView();
         mv.addObject("goodsAndImage",goodsAndImage);
         mv.setViewName("/user/goods");
         return mv;
     }
-
-
 }

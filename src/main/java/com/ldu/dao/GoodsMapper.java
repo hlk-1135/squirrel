@@ -81,5 +81,11 @@ public interface GoodsMapper {
      * @return
      */
     public List<Goods> selectByCatelogOrderByDate(@Param("catelogId")Integer catelogId,@Param("limit")Integer limit);
+
+    /**
+     * 查询登录用户的所有闲置商品
+     * @param user_id
+     * @return
+     */
     public List<Goods> getGoodsByUserId(Integer user_id);
 }

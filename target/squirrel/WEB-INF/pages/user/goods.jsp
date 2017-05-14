@@ -83,145 +83,47 @@
         -->
         <div id="user_content">
             <div class="share">
-                <div class="publish">
-                    <div class="pub_content">
-                        <div class="text_pub lead emoji-picker-container">
-                            <input type="text" name="text" data-emojiable="converted" class="form-control" data-type="original-input" style="display: none;"/>
-                            <div class="emoji-wysiwyg-editor form-control" data-type="input" contenteditable="true"></div>
-                            <i class="emoji-picker-icon emoji-picker face" data-type="picker"></i>
-                            <div class="tag"></div>
-                        </div>
-                        <div class="img_pub">
-                            <ul></ul>
-                        </div>
-                    </div>
-                    <div class="button">
-								<span class="fa fa-image">
-									::before
-									<input type="file" accept="image/gif,image/jpeg,image/jpg,image/png" multiple/>
-								</span>
-                        <div class="checkbox">
-                            <button>发 布</button>
-                        </div>
-                    </div>
-                </div>
                 <!--
                     作者：hlk_1135@outlook.com
                     时间：2017-05-11
                     描述：闲置商品展示
                 -->
                 <div class="share_content">
-                    <div class="no_share">
-                        <span>没有任何内容，去逛逛其它的吧！</span>
-                    </div>
-                    <div class="story">
-                        <span class="name">蓝牙耳机</span>
-                        <span class="text" style="overflow: hidden; outline: none;">
-                        			我的第一件商品————电脑耳机
-                        		</span>
-                        <div class="box">
-                            <div class="box_content" images="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595645.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414594845.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414601163.jpg">
-                                <div class="left_shadow"></div>
-                                <div class="left" index="1" style="display: none;"><</div>
-                                <div class="right_shadow"></div>
-                                <div class="left" index="3" style="display: none;">></div>
-                                <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg" index="2">
-                                <span class="com" style="display: none;left: 396.733px;"></span>
-                            </div>
-                            <div class="interact">
-                                <span class="fa fa-heart"><a>编辑</a></span>
-                                <span class="fa fa-share"><a>擦亮</a></span>
-                                <span class="fa fa-commenting"><a>10</a></span>
-                                <span class="time">2017-04-23</span>
-                            </div>
-                            <div class="like_detail">
-                                <div class="like_content">
-                                    <span>下架时间：2017-05-13</span>
+                    <c:if test="${empty goodsAndImage}">
+                        <div class="no_share">
+                            <span>没有任何内容，去逛逛其它的吧！</span>
+                        </div>
+                    </c:if>
+                    <c:if test="${!empty goodsAndImage}">
+                        <c:forEach var="items" items="${goodsAndImage}">
+                            <div class="story">
+                                <span class="name">${items.goods.name}</span>
+                                <span class="text" style="overflow: hidden; outline: none;">${items.goods.describle}</span>
+                                <div class="box">
+                                    <div class="box_content">
+                                        <div class="left_shadow"></div>
+                                        <div class="left" index="1" style="display: none;"><</div>
+                                        <div class="right_shadow"></div>
+                                        <div class="left" index="3" style="display: none;">></div>
+                                        <%--<img src="../upload/f6e6a94d-e001-4fac-b8d3-2f99a9689a61.jpg" index="2">--%>
+                                        <img src="../upload/${items.images[0].imgUrl}" index="2">
+                                        <span class="com" style="display: none;left: 396.733px;"></span>
+                                    </div>
+                                    <div class="interact">
+                                        <span class="fa fa-heart"><a>编辑</a></span>
+                                        <span class="fa fa-share"><a>擦亮</a></span>
+                                        <span class="fa fa-commenting"><a>${items.goods.commetNum}</a></span>
+                                        <span class="time">${items.goods.startTime}</span>
+                                    </div>
+                                    <div class="like_detail">
+                                        <div class="like_content">
+                                            <span>下架时间：${items.goods.endTime}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="story">
-                        <span class="name">蓝牙耳机</span>
-                        <span class="text" style="overflow: hidden; outline: none;">
-                        			我的第一件商品————电脑耳机
-                        		</span>
-                        <div class="box">
-                            <div class="box_content" images="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595645.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414594845.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414601163.jpg">
-                                <div class="left_shadow"></div>
-                                <div class="left" index="1" style="display: none;"><</div>
-                                <div class="right_shadow"></div>
-                                <div class="left" index="3" style="display: none;">></div>
-                                <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg" index="2">
-                                <span class="com" style="display: none;left: 396.733px;"></span>
-                            </div>
-                            <div class="interact">
-                                <span class="fa fa-heart"><a>编辑</a></span>
-                                <span class="fa fa-share"><a>擦亮</a></span>
-                                <span class="fa fa-commenting"><a>10</a></span>
-                                <span class="time">2017-04-23</span>
-                            </div>
-                            <div class="like_detail">
-                                <div class="like_content">
-                                    <span>下架时间：2017-05-13</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="story">
-                        <span class="name">蓝牙耳机</span>
-                        <span class="text" style="overflow: hidden; outline: none;">
-                        			我的第一件商品————电脑耳机
-                        		</span>
-                        <div class="box">
-                            <div class="box_content" images="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595645.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414594845.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414601163.jpg">
-                                <div class="left_shadow"></div>
-                                <div class="left" index="1" style="display: none;"><</div>
-                                <div class="right_shadow"></div>
-                                <div class="left" index="3" style="display: none;">></div>
-                                <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg" index="2">
-                                <span class="com" style="display: none;left: 396.733px;"></span>
-                            </div>
-                            <div class="interact">
-                                <span class="fa fa-heart"><a>编辑</a></span>
-                                <span class="fa fa-share"><a>擦亮</a></span>
-                                <span class="fa fa-commenting"><a>10</a></span>
-                                <span class="time">2017-04-23</span>
-                            </div>
-                            <div class="like_detail">
-                                <div class="like_content">
-                                    <span>下架时间：2017-05-13</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="story">
-                        <span class="name">蓝牙耳机</span>
-                        <span class="text" style="overflow: hidden; outline: none;">
-                        			我的第一件商品————电脑耳机
-                        		</span>
-                        <div class="box">
-                            <div class="box_content" images="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595645.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414594845.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg,http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414601163.jpg">
-                                <div class="left_shadow"></div>
-                                <div class="left" index="1" style="display: none;"><</div>
-                                <div class="right_shadow"></div>
-                                <div class="left" index="3" style="display: none;">></div>
-                                <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/share/1494414595303.jpg" index="2">
-                                <span class="com" style="display: none;left: 396.733px;"></span>
-                            </div>
-                            <div class="interact">
-                                <span class="fa fa-heart"><a>编辑</a></span>
-                                <span class="fa fa-share"><a>擦亮</a></span>
-                                <span class="fa fa-commenting"><a>10</a></span>
-                                <span class="time">2017-04-23</span>
-                            </div>
-                            <div class="like_detail">
-                                <div class="like_content">
-                                    <span>下架时间：2017-05-13</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </c:forEach>
+                    </c:if>
                 </div>
             </div>
             <!--
