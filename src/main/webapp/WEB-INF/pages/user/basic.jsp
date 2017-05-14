@@ -36,13 +36,6 @@
                 <div class="head_img">
                     <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/images/default_headImg.png">
                 </div>
-                <div class="cfile">
-							<span class="cfilesp">
-								<a class="btn btn-hollow">
-									<input class="hide" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" multiple/>更改头像
-								</a>
-							</span>
-                </div>
                 <div class="big_headimg">
                     <img src="">
                 </div>

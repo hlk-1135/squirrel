@@ -7,4 +7,5 @@ public interface UserService {
     public User getUserByPhone(String phone);
     public void updateUserName(User user);
     int updateGoodsNum(Integer id);
+    User selectByPrimaryKey(Integer id);
 }

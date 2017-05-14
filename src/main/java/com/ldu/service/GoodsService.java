@@ -41,7 +41,7 @@ public interface GoodsService {
     /**
      * 通过商品分类获取商品信息
      */
-    public List<Goods> getGoodsByCatelog(Catelog catelog);
+    public List<Goods> getGoodsByCatelog(Integer id);
 
     /**
      * 根据分类id,并进行时间排序,获取前limit个结果

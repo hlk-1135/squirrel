@@ -10,10 +10,10 @@
 <head>
     <meta charset="utf-8" />
     <title>鲁大二手工坊</title>
-    <link rel="stylesheet" href="../css/index.css" />
-    <script type="text/javascript" src="../js/jquery.js" ></script>
-    <script type="text/javascript" src="../js/materialize.min.js" ></script>
-    <script type="text/javascript" src="../js/index.bundle.js" ></script>
+    <link rel="stylesheet" href="<%=basePath%>css/index.css" />
+    <script type="text/javascript" src="<%=basePath%>js/jquery.js" ></script>
+    <script type="text/javascript" src="<%=basePath%>js/materialize.min.js" ></script>
+    <script type="text/javascript" src="<%=basePath%>js/index.bundle.js" ></script>
     <link rel="stylesheet" href="../css/materialize-icon.css" />
     <script>
         function showLogin() {
@@ -215,50 +215,50 @@
 -->
 <div ng-controller="sidebarController" class="sidebar stark-components ng-scope">
     <li ng-class="{true: 'active'}[isAll]">
-        <a href="/goods/catelog/1" class="index">
-            <img src="../img/index.png">
+        <a href="<%=basePath%>goods/catelog/1" class="index">
+            <img src="<%=basePath%>img/index.png">
             <em>最新发布</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isDigital]">
         <a href="/goods/catelog/1" class="digital">
-            <img src="../img/digital.png"  />
+            <img src="<%=basePath%>img/digital.png"  />
             <em>闲置数码</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isRide]">
-        <a href="/goods/catelog/2" class="ride">
-            <img src="../img/ride.png"/>
+        <a href="<%=basePath%>goods/catelog/2" class="ride">
+            <img src="<%=basePath%>img/ride.png"/>
             <em>校园代步</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isCommodity]">
-        <a href="/goods/catelog/3" class="commodity">
-            <img src="../img/commodity.png"/>
+        <a href="<%=basePath%>goods/catelog/3" class="commodity">
+            <img src="<%=basePath%>img/commodity.png"/>
             <em>电器日用</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isBook]">
-        <a href="/goods/catelog/4" class="book">
-            <img src="../img/book.png"/>
+        <a href="<%=basePath%>goods/catelog/4" class="book">
+            <img src="<%=basePath%>img/book.png"/>
             <em>图书教材</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isMakeup]">
-        <a href="/goods/catelog/5" class="makeup">
-            <img src="../img/makeup.png"/>
+        <a href="<%=basePath%>goods/catelog/5" class="makeup">
+            <img src="<%=basePath%>img/makeup.png"/>
             <em>美妆衣物</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isSport]">
-        <a href="/goods/catelog/6" class="sport">
-            <img src="../img/sport.png"/>
+        <a href="<%=basePath%>goods/catelog/6" class="sport">
+            <img src="<%=basePath%>img/sport.png"/>
             <em>运动棋牌</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isSmallthing]">
-        <a href="/goods/catelog/7" class="smallthing">
-            <img src="../img/smallthing.png"/>
+        <a href="<%=basePath%>goods/catelog/7" class="smallthing">
+            <img src="<%=basePath%>img/smallthing.png"/>
             <em>票券小物</em>
         </a>
     </li>
@@ -277,229 +277,20 @@
     <!--
         作者：hlk_1135@outlook.com
         时间：2017-05-05
-        描述：右侧banner（图片）部分
-    -->
-    <div class="slider-wapper">
-        <div class="slider" style="height: 440px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-            <ul class="slides" style="height: 400px;">
-                <li class="active" style="opacity: 1;">
-                    <a href="">
-                        <img src="../img/findfun.png"/>
-                    </a>
-                </li>
-            </ul>
-            <ul></ul>
-        </div>
-    </div>
-    <!--
-        作者：hlk_1135@outlook.com
-        时间：2017-05-05
         描述：最新发布
     -->
     <div class="index-title">
-        <a href="">最新发布</a>
+        <a href="">${catelog.name}</a>
         <hr class="hr1">
         <hr class="hr2">
     </div>
     <div class="waterfoo stark-components row">
         <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods1}">
+            <c:forEach var="item" items="${goodsExtendList}">
                 <div class="card col">
                     <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
                         <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
-                        </div>
-                        <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
-                        <div class="card-content item-name">
-                            <p><c:out value="${item.goods.name}"></c:out></p>
-                        </div>
-                        <div class="card-content item-location">
-                            <p>鲁东大学</p>
-                            <p><c:out value="${item.goods.startTime}"></c:out></p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <!--
-        作者：hlk_1135@outlook.com
-        时间：2017-05-05
-        描述：闲置数码
-    -->
-    <div class="index-title">
-        <a href="">闲置数码</a>
-        <hr class="hr1">
-        <hr class="hr2">
-    </div>
-    <div class="waterfoo stark-components row">
-        <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods1}">
-                <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
-                        <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
-                        </div>
-                        <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
-                        <div class="card-content item-name">
-                            <p><c:out value="${item.goods.name}"></c:out></p>
-                        </div>
-                        <div class="card-content item-location">
-                            <p>鲁东大学</p>
-                            <p><c:out value="${item.goods.startTime}"></c:out></p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <!--
-        作者：hlk_1135@outlook.com
-        时间：2017-05-05
-        描述：校园代步
-    -->
-    <div class="index-title">
-        <a href="">校园代步</a>
-        <hr class="hr1">
-        <hr class="hr2">
-    </div>
-    <div class="waterfoo stark-components row">
-        <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods2}">
-                <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
-                        <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
-                        </div>
-                        <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
-                        <div class="card-content item-name">
-                            <p><c:out value="${item.goods.name}"></c:out></p>
-                        </div>
-                        <div class="card-content item-location">
-                            <p>鲁东大学</p>
-                            <p><c:out value="${item.goods.startTime}"></c:out></p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <div class="index-title">
-        <a href="">电器日用</a>
-        <hr class="hr1">
-        <hr class="hr2">
-    </div>
-    <div class="waterfoo stark-components row">
-        <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods3}">
-                <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
-                        <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
-                        </div>
-                        <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
-                        <div class="card-content item-name">
-                            <p><c:out value="${item.goods.name}"></c:out></p>
-                        </div>
-                        <div class="card-content item-location">
-                            <p>鲁东大学</p>
-                            <p><c:out value="${item.goods.startTime}"></c:out></p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <div class="index-title">
-        <a href="">图书教材</a>
-        <hr class="hr1">
-        <hr class="hr2">
-    </div>
-    <div class="waterfoo stark-components row">
-        <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods4}">
-                <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
-                        <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
-                        </div>
-                        <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
-                        <div class="card-content item-name">
-                            <p><c:out value="${item.goods.name}"></c:out></p>
-                        </div>
-                        <div class="card-content item-location">
-                            <p>鲁东大学</p>
-                            <p><c:out value="${item.goods.startTime}"></c:out></p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <div class="index-title">
-        <a href="">美妆衣物</a>
-        <hr class="hr1">
-        <hr class="hr2">
-    </div>
-    <div class="waterfoo stark-components row">
-        <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods5}">
-                <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
-                        <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
-                        </div>
-                        <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
-                        <div class="card-content item-name">
-                            <p><c:out value="${item.goods.name}"></c:out></p>
-                        </div>
-                        <div class="card-content item-location">
-                            <p>鲁东大学</p>
-                            <p><c:out value="${item.goods.startTime}"></c:out></p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <div class="index-title">
-        <a href="">运动棋牌</a>
-        <hr class="hr1">
-        <hr class="hr2">
-    </div>
-    <div class="waterfoo stark-components row">
-        <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods6}">
-                <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
-                        <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
-                        </div>
-                        <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
-                        <div class="card-content item-name">
-                            <p><c:out value="${item.goods.name}"></c:out></p>
-                        </div>
-                        <div class="card-content item-location">
-                            <p>鲁东大学</p>
-                            <p><c:out value="${item.goods.startTime}"></c:out></p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <div class="index-title">
-        <a href="">票券小物</a>
-        <hr class="hr1">
-        <hr class="hr2">
-    </div>
-    <div class="waterfoo stark-components row">
-        <div class="item-wrapper normal">
-            <c:forEach var="item" items="${catelogGoods7}">
-                <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
-                        <div class="card-image">
-                            <img src="../upload/${item.images[0].imgUrl}" />
+                            <img src="<%=basePath%>upload/${item.images[0].imgUrl}" />
                         </div>
                         <div class="card-content item-price"><c:out value="${item.goods.price}"></c:out></div>
                         <div class="card-content item-name">

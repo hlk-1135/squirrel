@@ -105,7 +105,6 @@
                                         <div class="left" index="1" style="display: none;"><</div>
                                         <div class="right_shadow"></div>
                                         <div class="left" index="3" style="display: none;">></div>
-                                        <%--<img src="../upload/f6e6a94d-e001-4fac-b8d3-2f99a9689a61.jpg" index="2">--%>
                                         <img src="../upload/${items.images[0].imgUrl}" index="2">
                                         <span class="com" style="display: none;left: 396.733px;"></span>
                                     </div>

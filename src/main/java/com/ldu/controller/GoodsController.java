@@ -2,30 +2,26 @@ package com.ldu.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.ldu.pojo.Image;
-import com.ldu.pojo.User;
+
+import com.ldu.pojo.*;
 import com.ldu.service.CatelogService;
 import com.ldu.service.ImageService;
 import com.ldu.service.UserService;
 import com.sun.tracing.dtrace.Attributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ldu.pojo.Catelog;
-import com.ldu.pojo.Goods;
 import com.ldu.service.GoodsService;
 
 @Controller
@@ -49,17 +45,27 @@ public class GoodsController {
      */
     @RequestMapping(value = "/homeGoods")
     public ModelAndView homeGoods() throws Exception {
-        List<Goods> goods = null;
-
         ModelAndView modelAndView = new ModelAndView();
         //商品种类数量
         int catelogSize = 7;
         //每个种类显示商品数量
         int goodsSize = 6;
         for (int i = 1; i <= catelogSize; i++) {
-            goods = goodsService.getGoodsByCatelogOrderByDate(i, goodsSize);
+            List<Goods> goodsList = null;
+            List<GoodsExtend> goodsAndImage = null;
+            goodsList = goodsService.getGoodsByCatelogOrderByDate(i, goodsSize);
+            goodsAndImage = new ArrayList<GoodsExtend>();
+            for (int j = 0; j < goodsList.size() ; j++) {
+                //将用户信息和image信息封装到GoodsExtend类中，传给前台
+                GoodsExtend goodsExtend = new GoodsExtend();
+                Goods goods = goodsList.get(j);
+                List<Image> images = imageService.getImagesByGoodsPrimaryKey(goods.getId());
+                goodsExtend.setGoods(goods);
+                goodsExtend.setImages(images);
+                goodsAndImage.add(j, goodsExtend);
+            }
             String key = "catelog" + "Goods" + i;
-            modelAndView.addObject(key, goods);
+            modelAndView.addObject(key, goodsAndImage);
         }
         modelAndView.setViewName("goods/homeGoods");
         return modelAndView;
@@ -67,20 +73,51 @@ public class GoodsController {
 
     /**
      * 查询该类商品
-     *
-     * @param catelog
+     * @param id
      * 要求该参数不为空
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/catelogGoods")
-    public ModelAndView catelogGoods(
-            @RequestParam(value = "catelog", required = true) Catelog catelog)
-            throws Exception {
-        List<Goods> goods = goodsService.getGoodsByCatelog(catelog);
+    @RequestMapping(value = "/catelog/{id}")
+    public ModelAndView catelogGoods(@PathVariable("id") Integer id) throws Exception {
+        List<Goods> goodsList = goodsService.getGoodsByCatelog(id);
+        Catelog catelog = catelogService.selectByPrimaryKey(id);
+        List<GoodsExtend> goodsExtendList = new ArrayList<GoodsExtend>();
+        for(int i = 0;i<goodsList.size();i++) {
+            GoodsExtend goodsExtend = new GoodsExtend();
+            Goods goods = goodsList.get(i);
+            List<Image> imageList = imageService.getImagesByGoodsPrimaryKey(goods.getId());
+            goodsExtend.setGoods(goods);
+            goodsExtend.setImages(imageList);
+            goodsExtendList.add(i,goodsExtend);
+        }
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("goods", goods);
-        modelAndView.setViewName("goods/homeGoods");
+        modelAndView.addObject("goodsExtendList", goodsExtendList);
+        modelAndView.addObject("catelog", catelog);
+        modelAndView.setViewName("/goods/catelogGoods");
+        return modelAndView;
+    }
+
+    /**
+     * 根据商品id查询该商品详细信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/goodsId/{id}")
+    public ModelAndView getGoodsById(@PathVariable("id") Integer id) throws Exception {
+        Goods goods = goodsService.getGoodsByPrimaryKey(id);
+        User seller = userService.selectByPrimaryKey(goods.getUserId());
+        Catelog catelog = catelogService.selectByPrimaryKey(goods.getCatelogId());
+        GoodsExtend goodsExtend = new GoodsExtend();
+        List<Image> imageList = imageService.getImagesByGoodsPrimaryKey(id);
+        goodsExtend.setGoods(goods);
+        goodsExtend.setImages(imageList);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("goodsExtend", goodsExtend);
+        modelAndView.addObject("seller", seller);
+        modelAndView.addObject("catelog", catelog);
+        modelAndView.setViewName("/goods/detailGoods");
         return modelAndView;
     }
 
@@ -182,15 +219,14 @@ public class GoodsController {
         return "redirect:/user/allGoods";
     }
 
-    @RequestMapping(value = "/goodsInfo")
-    public ModelAndView goodsInfo(Integer goodsId){
-        ModelAndView modelAndView = new ModelAndView();
-        Goods goods = goodsService.getGoodsByPrimaryKey(2);
-        modelAndView.addObject("goods",goods);
-        modelAndView.setViewName("/goods/detailGoods");
-        return modelAndView;
-    }
-    //uploadFile
+    /**
+     * 上传物品
+     * @param session
+     * @param myfile
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping(value = "/uploadFile")
     public  Map<String,Object> uploadFile(HttpSession session,MultipartFile myfile) throws IllegalStateException, IOException{

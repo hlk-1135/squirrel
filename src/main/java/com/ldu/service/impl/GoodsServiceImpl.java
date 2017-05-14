@@ -49,8 +49,8 @@ public class GoodsServiceImpl implements GoodsService {
         return goods;
     }
 
-    public List<Goods> getGoodsByCatelog(Catelog catelog) {
-        List<Goods> goods = goodsMapper.selectByCatelog(catelog.getId());
+    public List<Goods> getGoodsByCatelog(Integer id) {
+        List<Goods> goods = goodsMapper.selectByCatelog(id);
         return goods;
     }
 
@@ -60,7 +60,6 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     public List<Goods> getGoodsByCatelogOrderByDate(Integer catelogId,Integer limit) {
-
         List<Goods> goodsList = goodsMapper.selectByCatelogOrderByDate(catelogId , limit);
         return goodsList;
     }

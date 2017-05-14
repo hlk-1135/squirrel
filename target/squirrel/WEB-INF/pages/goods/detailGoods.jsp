@@ -10,12 +10,12 @@
 <head>
     <meta charset="utf-8" />
     <title>鲁大二手工坊</title>
-    <link rel="stylesheet" href="../css/index.css" />
-    <script type="text/javascript" src="../js/jquery.js" ></script>
-    <script type="text/javascript" src="../js/materialize.min.js" ></script>
-    <script type="text/javascript" src="../js/index.bundle.js" ></script>
-    <link rel="stylesheet" href="../css/materialize-icon.css" />
-    <link rel="stylesheet" href="../css/detail.css" />
+    <link rel="stylesheet" href="<%=basePath%>css/index.css" />
+    <script type="text/javascript" src="<%=basePath%>js/jquery.js" ></script>
+    <script type="text/javascript" src="<%=basePath%>js/materialize.min.js" ></script>
+    <script type="text/javascript" src="<%=basePath%>js/index.bundle.js" ></script>
+    <link rel="stylesheet" href="<%=basePath%>css/materialize-icon.css" />
+    <link rel="stylesheet" href="<%=basePath%>css/detail.css" />
     <script>
         function showLogin() {
             if($("#signup-show").css("display")=='block'){
@@ -93,7 +93,7 @@
                                 <li><a>个人中心</a></li>
                                 <li><a>消息</a></li>
                                 <li><a onclick="ChangeName()">更改用户名</a></li>
-                                <li><a href="/user/logout">退出登录</a></li>
+                                <li><a href="<%=basePath%>/user/logout">退出登录</a></li>
                             </ul>
                         </div>
                     </li>
@@ -209,14 +209,14 @@
 <!--显示商品详情-->
 <div ng-controller="detailBoxController" class="detail-box stark-components z-depth-1 row ng-scope">
     <div class="col s12 path">
-        <a href="">闲置数码</a>
+        <a href="<%=basePath%>goods/catelog/${catelog.id}">${catelog.name}</a>
         <em>></em>
-        <a>B&O h5 蓝牙无线耳机</a>
+        <a>${goodsExtend.goods.name}</a>
     </div>
     <div class="col s6">
         <div class="slider" style="height: 440px;">
             <ul class="slides" style="height: 400px;">
-                <img src="../img/file-1493726053986.JPG" />
+                <img src="<%=basePath%>upload/${goodsExtend.images[0].imgUrl}" />
             </ul>
             <ul class="indicators">
                 <li class="indicator-item"></li>
@@ -227,13 +227,13 @@
         </div>
     </div>
     <div class="col s6">
-        <h1 class="item-name">B&O h5 蓝牙无线耳机</h1>
-        <h2 class="item-price">￥1300</h2>
+        <h1 class="item-name">${goodsExtend.goods.name}</h1>
+        <h2 class="item-price">${goodsExtend.goods.price}</h2>
         <div class="item-public-info">
             <p class="bargain">可讲价</p>
             <p>
                 <i class="iconfont"></i>
-                <em class="item-location">鲁东大学主校区</em>
+                <em class="item-location">鲁东大学</em>
             </p>
         </div>
         <div class="publisher-info-title">
@@ -255,39 +255,39 @@
                     <div class="base-blue z-depth-1 attr">
                         <i class="iconfont"></i>
                     </div>
-                    <div class="value">彼得潘的唐果艺滋</div>
+                    <div class="value">${seller.username}</div>
                 </div>
                 <div>
                     <div class="base-blue z-depth-1 attr">
                         <i class="iconfont"></i>
                     </div>
-                    <div class="value">15201729983</div>
+                    <div class="value">${seller.phone}</div>
                 </div>
                 <div>
                     <div class="base-blue z-depth-1 attr">
                         <i class="iconfont"></i>
                     </div>
-                    <div class="value">2841740280</div>
+                    <div class="value">${seller.qq}</div>
                 </div>
                 <div>
                     <div class="base-blue z-depth-1 attr">
                         <i class="iconfont"></i>
                     </div>
-                    <div class="value">guoyikaifuture</div>
+                    <div class="value"></div>
                 </div>
             </div>
         </c:if>
-        <h1 class="item-pub-time">发布于 2017/05/02 19:54:15</h1>
+        <h1 class="item-pub-time">发布于 ${goodsExtend.goods.startTime}</h1>
     </div>
 </div>
 <div class="detail-box stark-components z-depth-1 row">
     <h1 class="title">商品详情</h1>
     <hr class="hr1" />
     <hr class="hr2" />
-    <p class="section">去年国庆购于某东，实际听了三个月左右，过完年就没用过。</p>
+    <p class="section">${goodsExtend.goods.describle}</p>
     <p class="section"></p>
     <p class="section">
-        所有配件原封不动，包装盒的塑封膜只开了底，练防伪码都没动，也是自己购置电子产品的习惯，连包装盒都会保存完好。
+        联系我的时候，请说明是在鲁大Squirrel校园二手工坊上看见的哦~
     </p>
 </div>
 <div class="row detail-area">
