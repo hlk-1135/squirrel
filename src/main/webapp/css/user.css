@@ -171,3 +171,110 @@
 #dir {
     height: 100px;
 }
+.bannerimg {
+    background: url(../img/findfun.png);
+    height: 400px;
+}
+.bannerimg .bannerul {
+    width: 530px;
+    line-height: 30px;
+    margin: 20px 0 0 0;
+    float: left;
+    color: #000000;
+    font-size: 20px;
+}
+.text2 {
+    float: left;
+    margin-left: 40px;
+}
+.text4 span {
+    font-weight: bold;
+}
+.text6 {
+    font-weight: bold;
+    float: left;
+    margin-left: 40px;
+}
+.logoimg {
+    position: absolute;
+    float: right;
+    width: 150px;
+    height: 65px;
+    bottom: 3px;
+    right: 3px;
+}
+.bannerul p {
+    -webkit-transform: translate(60px);
+    -moz-transform: translate(60px);
+    -o-transform: translate(60px);
+    -ms-transform: translate(60px);
+    transform: translate(60px);
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8), 2px 2px 3px rgba(180, 151, 151, 0.3);//������Ӱ
+}
+.bannerul p:nth-child(1) {
+    -webkit-animation: animations 2s ease-out 1s backwards;
+    -moz-animation: animations 2s ease-out 1s backwards;
+    -o-animation: animations 2s ease-out 1s backwards;
+    -ms-animation: animations 2s ease-out 1s backwards;
+    animation: animations 2s ease-out 1s backwards;
+}
+.bannerul p:nth-child(2) {
+    -webkit-animation: animations 2s ease-out 3s backwards;
+    -moz-animation: animations 2s ease-out 3s backwards;
+    -o-animation: animations 2s ease-out 3s backwards;
+    -ms-animation: animations 2s ease-out 3s backwards;
+    animation: animations 2s ease-out 3s backwards;
+}
+.bannerul p:nth-child(3) {
+    -webkit-animation: animations 2s ease-in-out 5s backwards;
+    -moz-animation: animations 2s ease-in-out 5s backwards;
+    -o-animation: animations 2s ease-in-out 5s backwards;
+    -ms-animation: animations 2s ease-in-out 5s backwards;
+    animation: animations 2s ease-in-out 5s backwards;
+}
+.bannerul p:nth-child(4) {
+    -webkit-animation: animations 2s ease-in-out 7s backwards;
+    -moz-animation: animations 2s ease-in-out 7s backwards;
+    -o-animation: animations 2s ease-in-out 7s backwards;
+    -ms-animation: animations 2s ease-in-out 7s backwards;
+    animation: animations 2s ease-in-out 7s backwards;
+}
+.bannerul p:nth-child(5) {
+    -webkit-animation: animations 2s ease-in-out 9s backwards;
+    -moz-animation: animations 2s ease-in-out 9s backwards;
+    -o-animation: animations 2s ease-in-out 9s backwards;
+    -ms-animation: animations 2s ease-in-out 9s backwards;
+    animation: animations 2s ease-in-out 9s backwards;
+}
+.bannerul p:nth-child(6) {
+    -webkit-animation: animations 2s ease-in-out 11s backwards;
+    -moz-animation: animations 2s ease-in-out 11s backwards;
+    -o-animation: animations 2s ease-in-out 11s backwards;
+    -ms-animation: animations 2s ease-in-out 11s backwards;
+    animation: animations 2s ease-in-out 11s backwards;
+}
+@-webkit-keyframes animations {
+    0% {-webkit-transform:translate(0); opacity:0; }
+    50% {-webkit-transform:translate(30px); opacity:.5;}
+    100% {-webkit-transform:translate(60px); opacity:1;}
+}
+@-moz-keyframes animations {
+    0% {-moz-transform:translate(0);opacity:0;}
+    50% {-moz-transform:translate(30px);opacity:.5;}
+    100% {-moz-transform:translate(60px);opacity:1;}
+}
+@-o-keyframes animations {
+    0% {-o-transform:translate(0);opacity:0;}
+    50% {-o-transform:translate(30px);opacity:.5;}
+    100% {-o-transform:translate(60px);opacity:1;}
+}
+@-ms-keyframes animations {
+    0% {-ms-transform:translate(0);opacity:0;}
+    50% {-ms-transform:translate(30px);opacity:.5;}
+    100% {-ms-transform:translate(60px);opacity:1;}
+}
+@keyframes animations {
+    0% {transform:translate(0);opacity:0;}
+    50% {transform:translate(30px);opacity:.5;}
+    100% {transform:translate(60px);opacity:1;}
+}

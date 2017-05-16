@@ -29,6 +29,10 @@
     delete from image
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteImagesByGoodsPrimaryKey" parameterType="java.lang.Integer">
+    delete from image
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.ldu.pojo.Image" >
     insert into image (id, goods_id, img_url
       )

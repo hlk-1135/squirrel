@@ -14,7 +14,6 @@ import com.ldu.util.DateUtil;
 /**
  * 对商品的操作类（增删改查）
  * @ClassName 	GoodServiceImpl
- * @author 		逯其鲁
  * @date		2017-5-9下午9:22:24
  */
 
@@ -49,8 +48,13 @@ public class GoodsServiceImpl implements GoodsService {
         return goods;
     }
 
-    public List<Goods> getGoodsByCatelog(Integer id) {
-        List<Goods> goods = goodsMapper.selectByCatelog(id);
+    public List<Goods> searchGoods(String name, String describle) {
+        List<Goods> goods = goodsMapper.searchGoods(name,describle);
+        return  goods;
+    }
+
+    public List<Goods> getGoodsByCatelog(Integer id,String name,String describle) {
+        List<Goods> goods = goodsMapper.selectByCatelog(id,name,describle);
         return goods;
     }
 

@@ -31,8 +31,21 @@
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="searchGoods" resultMap="ResultMapWithBLOBs" parameterType="String" >
+    select
+    *
+    from goods
+    where name like concat('%',#{name},'%') OR describle like concat('%',#{describle},'%')
+  </select>
   <select id="selectByCatelog" resultMap="ResultMapWithBLOBs">
-    select * from goods where catelog_id = #{catelog_id,jdbcType=INTEGER}
+    select * from goods
+    where catelog_id = #{catelog_id,jdbcType=INTEGER}
+    <if test="name != null" >
+     AND (name like concat('%',#{name},'%')
+    </if>
+    <if test="describle != null" >
+     OR describle like concat('%',#{describle},'%'))
+    </if>
   </select>
   <select id="selectAllGoods" resultMap="ResultMapWithBLOBs">
     select * from goods

@@ -22,6 +22,14 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getUserList" resultMap="BaseResultMap" parameterType="String">
+    select <include refid="Base_Column_List" /> from user where 1=1
+    <if test="username != null">
+      <![CDATA[
+        and username like CONCAT('%',#{username,jdbcType=VARCHAR}, '%')
+      ]]>
+    </if>
+  </select>
   <!--根据手机号查询用户-->
   <select id="getUserByPhone" resultMap="BaseResultMap" parameterType="String" >
     select
@@ -158,7 +166,7 @@
   </update>
   <update id="updateGoodsNum" parameterType="Integer" >
     update user set
-    goods_num = goods_num+1
+    goods_num = #{goodsNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

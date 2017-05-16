@@ -6,7 +6,7 @@ import java.util.List;
 public class GoodsExtend {
     private Goods goods;
     private List<Image> images = new ArrayList<Image>();
-    
+
 	public Goods getGoods() {
 		return goods;
 	}

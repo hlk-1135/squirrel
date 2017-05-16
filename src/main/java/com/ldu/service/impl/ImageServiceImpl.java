@@ -22,4 +22,7 @@ public class ImageServiceImpl implements ImageService {
         List<Image> image = imageMapper.selectByGoodsPrimaryKey(goodsId);
         return image;
     }
+    public int deleteImagesByGoodsPrimaryKey(Integer goodsId) {
+        return imageMapper.deleteImagesByGoodsPrimaryKey(goodsId);
+    }
 }

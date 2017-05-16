@@ -15,6 +15,7 @@
     <script type="text/javascript" src="../js/materialize.min.js" ></script>
     <script type="text/javascript" src="../js/index.bundle.js" ></script>
     <link rel="stylesheet" href="../css/materialize-icon.css" />
+    <link rel="stylesheet" href="../css/user.css" />
     <script>
         function showLogin() {
             if($("#signup-show").css("display")=='block'){
@@ -53,16 +54,16 @@
 <div ng-controller="headerController" class="header stark-components navbar-fixed ng-scope">
     <nav class="white nav1">
         <div class="nav-wrapper">
-            <a href="" class="logo">
+            <a href="<%=basePath%>goods/homeGoods" class="logo">
                 <em class="em1">鲁大</em>
                 <em class="em2">二手工坊</em>
                 <em class="em3">ldu.market</em>
             </a>
             <div class="nav-wrapper search-bar">
-                <form ng-submit="search()" class="ng-pristine ng-invalid ng-invalid-required">
+                <form ng-submit="search()" class="ng-pristine ng-invalid ng-invalid-required" action="/goods/search">
                     <div class="input-field">
-                        <input id="search" type="search" ng-model="keyword" placeholder="搜点什么吧233..."
-                               required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
+                        <input id="search" name="str" placeholder="搜点什么吧233..." style="height: 40px;"
+                               class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
                         <label for="search" class="active">
                             <i ng-click="search()" class="iconfont"></i>
                         </label>
@@ -70,36 +71,43 @@
                 </form>
             </div>
             <ul class="right">
-                <li class="publish-btn">
-                    <button ng-click="showLogin()" data-position="bottom" data-delay="50"
-                            data-tooltip="需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" data-tooltip-id="510d3084-e666-f82f-3655-5eae4304a83a"	>
-                        我要发布</button>
-                </li>
+                <c:if test="${empty cur_user}">
+                    <li class="publish-btn">
+                        <button ng-click="showLogin()" data-position="bottom" data-delay="50"
+                                data-tooltip="需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" data-tooltip-id="510d3084-e666-f82f-3655-5eae4304a83a"	>
+                            我要发布</button>
+                    </li>
+                </c:if>
                 <c:if test="${!empty cur_user}">
-                <li>
-                    <a href="">我发布的商品</a>
-                </li>
-                <li>
-                    <a>${cur_user.username}</a>
-                </li>
-                <li class="notification">
-                    <i ng-click="showNotificationBox()" class="iconfont"></i>
-                    <div ng-show="notification.tagIsShow" class="notification-amount red lighten-1 ng-binding ng-hide">0 </div>
-                </li>
-                <li class="changemore">
-                    <a class="changeMoreVertShow()">
-                        <i class="iconfont"></i>
-                    </a>
-                    <div class="more-vert">
-                        <ul class="dropdown-content">
-                            <li><a href="/user/home">个人中心</a></li>
-                            <li><a>消息</a></li>
-                            <li><a onclick="ChangeName()">更改用户名</a></li>
-                            <li><a href="/user/logout">退出登录</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </c:if>
+                    <li class="publish-btn">
+                        <button data-position="bottom" class="red lighten-1 waves-effect waves-light btn">
+                            <a href="/goods/publishGoods">我要发布</a>
+                        </button>
+                    </li>
+                    <li>
+                        <a href="/user/allGoods">我发布的商品</a>
+                    </li>
+                    <li>
+                        <a>${cur_user.username}</a>
+                    </li>
+                    <li class="notification">
+                        <i ng-click="showNotificationBox()" class="iconfont"></i>
+                        <div ng-show="notification.tagIsShow" class="notification-amount red lighten-1 ng-binding ng-hide">0 </div>
+                    </li>
+                    <li class="changemore">
+                        <a class="changeMoreVertShow()">
+                            <i class="iconfont"></i>
+                        </a>
+                        <div class="more-vert">
+                            <ul class="dropdown-content">
+                                <li><a href="/user/home">个人中心</a></li>
+                                <li><a>消息</a></li>
+                                <li><a onclick="ChangeName()">更改用户名</a></li>
+                                <li><a href="/user/logout">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </c:if>
                 <c:if test="${empty cur_user}">
                     <li>
                         <a onclick="showLogin()">登录</a>
@@ -121,7 +129,9 @@
     <div id="login-show" class="login stark-components">
         <div class="publish-box z-depth-4">
             <div class="row">
-                <div class="col s12 title"></div>
+                <a onclick="showLogin()">
+                    <div class="col s12 title"></div>
+                </a>
                 <form:form action="/user/login" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
@@ -155,7 +165,9 @@
     <div id="signup-show" class="signup stark-components">
         <div class="publish-box z-depth-4">
             <div class="row">
-                <div class="col s12 title"></div>
+                <a onclick="showSignup()">
+                    <div class="col s12 title"></div>
+                </a>
                 <form:form action="/user/addUser" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
@@ -284,11 +296,22 @@
             <ul class="slides" style="height: 400px;">
                 <li class="active" style="opacity: 1;">
                     <a href="">
-                        <img src="../img/findfun.png"/>
+                        <div class="bannerimg">
+                            <ul class="bannerul">
+                                <p class="text1">亲爱的同学们：</p>
+                                <p class="text2">欢迎来到鲁东大学Squirrel校园二手工坊。临近毕业季的</p>
+                                <p class="text3">你，是否有太多的闲置与校友分享，为了追求更好的校园服</p>
+                                <p class="text4">务，我们打造了一个全新的校园平台——<span>Squirrel二手工坊</p>
+                                <p class="text5">这里有更多的闲置分享，更自由的校园话题讨论，你想要的，都在这里。</p>
+                                <p class="text6">加入Squirrel，你的大学，应更精彩。</p>
+                            </ul>
+                            <div class="logoimg">
+                                <img src="../img/p_logo.jpg" />
+                            </div>
+                        </div>
                     </a>
                 </li>
             </ul>
-            <ul></ul>
         </div>
     </div>
     <!--

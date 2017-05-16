@@ -12,6 +12,7 @@ import com.ldu.pojo.*;
 import com.ldu.service.CatelogService;
 import com.ldu.service.ImageService;
 import com.ldu.service.UserService;
+import com.ldu.util.DateUtil;
 import com.sun.tracing.dtrace.Attributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,25 @@ public class GoodsController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/search")
+    public ModelAndView searchGoods(@RequestParam(value = "str",required = false) String str)throws Exception {
+        List<Goods> goodsList = goodsService.searchGoods(str,str);
+        List<GoodsExtend> goodsExtendList = new ArrayList<GoodsExtend>();
+        for(int i = 0;i<goodsList.size();i++) {
+            GoodsExtend goodsExtend = new GoodsExtend();
+            Goods goods = goodsList.get(i);
+            List<Image> imageList = imageService.getImagesByGoodsPrimaryKey(goods.getId());
+            goodsExtend.setGoods(goods);
+            goodsExtend.setImages(imageList);
+            goodsExtendList.add(i,goodsExtend);
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("goodsExtendList", goodsExtendList);
+        modelAndView.addObject("search",str);
+        modelAndView.setViewName("/goods/searchGoods");
+        return modelAndView;
+    }
+
     /**
      * 查询该类商品
      * @param id
@@ -79,8 +99,9 @@ public class GoodsController {
      * @throws Exception
      */
     @RequestMapping(value = "/catelog/{id}")
-    public ModelAndView catelogGoods(@PathVariable("id") Integer id) throws Exception {
-        List<Goods> goodsList = goodsService.getGoodsByCatelog(id);
+    public ModelAndView catelogGoods(HttpServletRequest request,@PathVariable("id") Integer id,
+                                     @RequestParam(value = "str",required = false) String str) throws Exception {
+        List<Goods> goodsList = goodsService.getGoodsByCatelog(id,str,str);
         Catelog catelog = catelogService.selectByPrimaryKey(id);
         List<GoodsExtend> goodsExtendList = new ArrayList<GoodsExtend>();
         for(int i = 0;i<goodsList.size();i++) {
@@ -94,6 +115,7 @@ public class GoodsController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("goodsExtendList", goodsExtendList);
         modelAndView.addObject("catelog", catelog);
+        modelAndView.addObject("search",str);
         modelAndView.setViewName("/goods/catelogGoods");
         return modelAndView;
     }
@@ -105,7 +127,7 @@ public class GoodsController {
      * @throws Exception
      */
     @RequestMapping(value = "/goodsId/{id}")
-    public ModelAndView getGoodsById(@PathVariable("id") Integer id) throws Exception {
+    public ModelAndView getGoodsById(@PathVariable("id") Integer id,@RequestParam(value = "str",required = false) String str) throws Exception {
         Goods goods = goodsService.getGoodsByPrimaryKey(id);
         User seller = userService.selectByPrimaryKey(goods.getUserId());
         Catelog catelog = catelogService.selectByPrimaryKey(goods.getCatelogId());
@@ -116,6 +138,7 @@ public class GoodsController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("goodsExtend", goodsExtend);
         modelAndView.addObject("seller", seller);
+        modelAndView.addObject("search",str);
         modelAndView.addObject("catelog", catelog);
         modelAndView.setViewName("/goods/detailGoods");
         return modelAndView;
@@ -127,18 +150,19 @@ public class GoodsController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/editGoods")
-    public ModelAndView editGoods(Integer goodsId) throws Exception {
+    @RequestMapping(value = "/editGoods/{id}")
+    public ModelAndView editGoods(@PathVariable("id") Integer id) throws Exception {
 
-        Goods goods = goodsService.getGoodsByPrimaryKey(goodsId);
+        Goods goods = goodsService.getGoodsByPrimaryKey(id);
+        List<Image> imageList = imageService.getImagesByGoodsPrimaryKey(id);
+        GoodsExtend goodsExtend = new GoodsExtend();
+        goodsExtend.setGoods(goods);
+        goodsExtend.setImages(imageList);
         ModelAndView modelAndView = new ModelAndView();
-
         // 将商品信息添加到model
-        modelAndView.addObject("goods", goods);
-
-        modelAndView.setViewName("goods/editGoods");
-
-        return null;
+        modelAndView.addObject("goodsExtend", goodsExtend);
+        modelAndView.setViewName("/goods/editGoods");
+        return modelAndView;
     }
 
     /**
@@ -148,9 +172,13 @@ public class GoodsController {
      * @throws Exception
      */
     @RequestMapping(value = "/editGoodsSubmit")
-    public String editGoodsSubmit(Integer goodsId, Goods goods) throws Exception {
-        goodsService.updateGoodsByPrimaryKeyWithBLOBs(goodsId, goods);
-        return "/goods/homeGoods";
+    public String editGoodsSubmit(HttpServletRequest request,Goods goods) throws Exception {
+        User cur_user = (User)request.getSession().getAttribute("cur_user");
+        goods.setUserId(cur_user.getId());
+        String polish_time = DateUtil.getNowDay();
+        goods.setPolishTime(polish_time);
+        goodsService.updateGoodsByPrimaryKeyWithBLOBs(goods.getId(), goods);
+        return "redirect:/user/allGoods";
     }
 
     /**
@@ -166,15 +194,27 @@ public class GoodsController {
     }
 
     /**
-     * 管理员删除商品
+     * 用户删除商品
      *
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/deleteGoods")
-    public ModelAndView deleteGoods() throws Exception {
-
-        return null;
+    @RequestMapping(value = "/deleteGoods/{id}")
+    public String deleteGoods(HttpServletRequest request,@PathVariable("id") Integer id) throws Exception {
+        Goods goods = goodsService.getGoodsByPrimaryKey(id);
+        //删除商品后，catlog的number-1，user表的goods_num-1，image删除,更新session的值
+        User cur_user = (User)request.getSession().getAttribute("cur_user");
+        goods.setUserId(cur_user.getId());
+        int number = cur_user.getGoodsNum();
+        Integer calelog_id = goods.getCatelogId();
+        Catelog catelog = catelogService.selectByPrimaryKey(calelog_id);
+        catelogService.updateCatelogNum(calelog_id,catelog.getNumber()-1);
+        userService.updateGoodsNum(cur_user.getId(),number-1);
+        cur_user.setGoodsNum(number-1);
+        request.getSession().setAttribute("cur_user",cur_user);//修改session值
+        imageService.deleteImagesByGoodsPrimaryKey(id);
+        goodsService.deleteGoodsByPrimaryKey(id);
+        return "redirect:/user/allGoods";
     }
     /**
      * 发布商品
@@ -191,7 +231,6 @@ public class GoodsController {
         } else {
             return "/goods/pubGoods";
         }
-
     }
     /**
      * 提交发布的商品信息
@@ -200,7 +239,7 @@ public class GoodsController {
      * @throws Exception
      */
     @RequestMapping(value = "/publishGoodsSubmit")
-    public String publishGoodsSubmit(HttpServletRequest request,HttpServletResponse response,Image ima,Goods goods,MultipartFile image)
+    public String publishGoodsSubmit(HttpServletRequest request,Image ima,Goods goods,MultipartFile image)
             throws Exception {
         //查询出当前用户cur_user对象，便于使用id
         User cur_user = (User)request.getSession().getAttribute("cur_user");
@@ -211,10 +250,12 @@ public class GoodsController {
         ima.setGoodsId(goodsId);
         imageService.insert(ima);//在image表中插入商品图片
         //发布商品后，catlog的number+1，user表的goods_num+1，更新session的值
+        int number = cur_user.getGoodsNum();
         Integer calelog_id = goods.getCatelogId();
-        catelogService.updateCatelogNum(calelog_id);
-        userService.updateGoodsNum(cur_user.getId());
-        cur_user.setGoodsNum(cur_user.getGoodsNum()+1);
+        Catelog catelog = catelogService.selectByPrimaryKey(calelog_id);
+        catelogService.updateCatelogNum(calelog_id,catelog.getNumber()+1);
+        userService.updateGoodsNum(cur_user.getId(),number+1);
+        cur_user.setGoodsNum(number+1);
         request.getSession().setAttribute("cur_user",cur_user);//修改session值
         return "redirect:/user/allGoods";
     }

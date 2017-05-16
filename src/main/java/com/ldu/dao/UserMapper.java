@@ -1,6 +1,9 @@
 package com.ldu.dao;
 
 import com.ldu.pojo.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,5 +20,7 @@ public interface UserMapper {
 
     User getUserByPhone(String phone);//通过手机号查询用户
 
-    int updateGoodsNum(Integer id);//更改用户的商品数量
+    int updateGoodsNum(@Param("id") Integer id, @Param("goodsNum") Integer goodsNum);//更改用户的商品数量
+
+    public List<User> getUserList(@Param("username") String username);
 }

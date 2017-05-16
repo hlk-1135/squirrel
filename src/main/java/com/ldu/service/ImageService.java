@@ -15,4 +15,11 @@ public interface ImageService {
      * @return
      */
     public List<Image> getImagesByGoodsPrimaryKey(Integer goodsId);
+
+    /**
+     * 通过商品Id删除商品
+     * @param goodsId
+     * @return
+     */
+    int deleteImagesByGoodsPrimaryKey(Integer goodsId);
 }

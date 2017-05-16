@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ldu.pojo.Catelog;
 import com.ldu.pojo.Goods;
+import org.apache.ibatis.annotations.Param;
 
 public interface GoodsService {
     /**
@@ -37,11 +38,13 @@ public interface GoodsService {
      */
     public List<Goods> getAllGoods();
 
+    List<Goods> searchGoods(String name, String describle);
+
 
     /**
      * 通过商品分类获取商品信息
      */
-    public List<Goods> getGoodsByCatelog(Integer id);
+    public List<Goods> getGoodsByCatelog(Integer id,String name,String describle);
 
     /**
      * 根据分类id,并进行时间排序,获取前limit个结果

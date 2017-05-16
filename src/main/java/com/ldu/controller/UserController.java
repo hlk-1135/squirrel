@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,8 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/addUser")
-    public String addUser(@ModelAttribute("user") User user1) {
+    public String addUser(HttpServletRequest request,@ModelAttribute("user") User user1) {
+        String url=request.getHeader("Referer");
         User user=userService.getUserByPhone(user1.getPhone());
         if(user==null) {//检测该用户是否已经注册
             String t = DateUtil.getNowDate();
@@ -48,9 +51,8 @@ public class UserController {
             user1.setPassword(str);
             user1.setGoodsNum(0);
             userService.addUser(user1);
-            return "redirect:/goods/homeGoods";
         }
-        return "redirect:/goods/homeGoods";
+        return "redirect:"+url;
     }
 
     /**
@@ -61,18 +63,17 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/login")
-    public ModelAndView loginValidate(HttpServletRequest request,User user,ModelMap modelMap) {
+    public ModelAndView loginValidate(HttpServletRequest request, HttpServletResponse response,User user, ModelMap modelMap) {
         User cur_user = userService.getUserByPhone(user.getPhone());
-        if(cur_user == null)
-            return new ModelAndView(new RedirectView("/"));
+        String url=request.getHeader("Referer");
         if(cur_user != null) {
             String pwd = MD5.md5(user.getPassword());
             if(pwd.equals(cur_user.getPassword())) {
                 request.getSession().setAttribute("cur_user",cur_user);
-                return new ModelAndView("redirect:/goods/homeGoods");
+                return new ModelAndView("redirect:"+url);
             }
         }
-        return new ModelAndView("redirect:/goods/homeGoods");
+        return new ModelAndView("redirect:"+url);
     }
 
     /**
@@ -84,12 +85,13 @@ public class UserController {
      */
     @RequestMapping(value = "/changeName")
     public ModelAndView changeName(HttpServletRequest request,User user,ModelMap modelMap) {
+        String url=request.getHeader("Referer");
         //从session中获取出当前用户
         User cur_user = (User)request.getSession().getAttribute("cur_user");
         cur_user.setUsername(user.getUsername());//更改当前用户的用户名
         userService.updateUserName(cur_user);//执行修改操作
         request.getSession().setAttribute("cur_user",cur_user);//修改session值
-        return new ModelAndView("redirect:/goods/homeGoods");
+        return new ModelAndView("redirect:"+url);
     }
 
     /**

@@ -87,6 +87,6 @@
   </update>
   <update id="updateCatelogNum" parameterType="Integer" >
     update catelog
-    set number = number +1 where id = #{id,jdbcType=INTEGER}
+    set number = #{number,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

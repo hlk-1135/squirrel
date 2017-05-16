@@ -62,12 +62,14 @@ public interface GoodsMapper {
      */
     public List<Goods> selectAllGoods();
 
+    List<Goods> searchGoods(@Param("name") String name,@Param("describle") String describle);
+
     /**
      * 根据商品分类的id，查询商品
      * @param catelog_id
      * @return
      */
-    public List<Goods> selectByCatelog(Integer catelog_id);
+    public List<Goods> selectByCatelog(@Param("catelog_id") Integer catelog_id,@Param("name") String name,@Param("describle") String describle);
 
     /**
      * 根据时间先后获取商品信息，进行分页查询

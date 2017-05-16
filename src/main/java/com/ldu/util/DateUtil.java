@@ -36,11 +36,11 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取当前时间(年-月-日 时:分:秒)
+	 * 获取当前时间(年-月-日 时:分)
 	 * @return
 	 */
 	public static String getNowDate(){
-		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT1);
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT2);
 		Date date = new Date();
 		String _time = sdf.format(date);
 		return _time;

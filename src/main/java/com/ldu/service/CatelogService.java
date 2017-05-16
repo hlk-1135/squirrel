@@ -13,5 +13,5 @@ public interface CatelogService {
     public int getCount(Catelog catelog);
     Catelog selectByPrimaryKey(Integer id);
     int updateByPrimaryKey(Catelog record);
-    int updateCatelogNum(Integer id);
+    int updateCatelogNum(Integer id,Integer number);
 }

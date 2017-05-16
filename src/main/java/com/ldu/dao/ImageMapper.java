@@ -7,6 +7,8 @@ import com.ldu.pojo.Image;
 public interface ImageMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteImagesByGoodsPrimaryKey(Integer goodsId);
+
     int insert(Image record);
 
     int insertSelective(Image record);

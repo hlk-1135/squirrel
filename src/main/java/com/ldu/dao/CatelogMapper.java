@@ -1,6 +1,7 @@
 package com.ldu.dao;
 
 import com.ldu.pojo.Catelog;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface CatelogMapper {
 
     int updateByPrimaryKey(Catelog record);
 
-    int updateCatelogNum(Integer id);
+    int updateCatelogNum(@Param("id") Integer id,@Param("number") Integer number);
 
     List<Catelog> getAllCatelog();//根据商品类别查询商品
 

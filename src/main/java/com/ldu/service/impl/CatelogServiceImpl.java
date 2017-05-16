@@ -32,7 +32,7 @@ public class CatelogServiceImpl implements CatelogService {
     public int updateByPrimaryKey(Catelog catelog) {
         return  catelogMapper.updateByPrimaryKey(catelog);
     }
-    public int updateCatelogNum(Integer id) {
-        return catelogMapper.updateCatelogNum(id);
+    public int updateCatelogNum(Integer id,Integer number) {
+        return catelogMapper.updateCatelogNum(id,number);
     }
 }
