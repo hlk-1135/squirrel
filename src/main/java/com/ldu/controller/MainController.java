@@ -30,7 +30,7 @@ public class MainController {
             page = 1;
         if("".equals(pageSizeStr))
             pageSize = 10;
-        List<User> data = userService.getPageUser(page,pageSize,username);
+        List<User> data = userService.getPageUser(1,10,username);
         System.out.println("data:"+data.size());
         UserGrid userGrid = new UserGrid();
         userGrid.setData(data);

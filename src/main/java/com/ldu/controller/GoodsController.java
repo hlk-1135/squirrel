@@ -14,6 +14,7 @@ import com.ldu.service.ImageService;
 import com.ldu.service.UserService;
 import com.ldu.util.DateUtil;
 import com.sun.tracing.dtrace.Attributes;
+import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,6 +68,7 @@ public class GoodsController {
             }
             String key = "catelog" + "Goods" + i;
             modelAndView.addObject(key, goodsAndImage);
+
         }
         modelAndView.setViewName("goods/homeGoods");
         return modelAndView;
@@ -243,6 +245,7 @@ public class GoodsController {
             throws Exception {
         //查询出当前用户cur_user对象，便于使用id
         User cur_user = (User)request.getSession().getAttribute("cur_user");
+
         goods.setUserId(cur_user.getId());
         int i = goodsService.addGood(goods,10);//在goods表中插入物品
         //返回插入的该物品的id

@@ -105,7 +105,7 @@
                     </div><hr />
                     <div class="changeinfo">
                         <span>手机号码：</span>
-                        <input class="in_info" type="text" name="phone" value="${cur_user.phone}" />
+                        <input class="in_info" type="text" name="phone" value="${cur_user.phone}" readonly="true"/>
                         <span id="checkphone">已验证</span>
                     </div><hr />
                     <div class="changeinfo">

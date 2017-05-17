@@ -20,22 +20,24 @@
     id, catelog_id, user_id, name, price, real_price, start_time, polish_time, end_time, commet_num
   </sql>
   <sql id="Blob_Column_List" >
-    desc
+    describle
   </sql>
   <sql id="Factor">
-    and end_time >= now() order by polish_time
+    and end_time >= now() order by polish_time DESC
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select
     *
     from goods
     where id = #{id,jdbcType=INTEGER}
+    <include refid="Factor"></include>
   </select>
   <select id="searchGoods" resultMap="ResultMapWithBLOBs" parameterType="String" >
     select
     *
     from goods
     where name like concat('%',#{name},'%') OR describle like concat('%',#{describle},'%')
+    <include refid="Factor"></include>
   </select>
   <select id="selectByCatelog" resultMap="ResultMapWithBLOBs">
     select * from goods
@@ -46,18 +48,20 @@
     <if test="describle != null" >
      OR describle like concat('%',#{describle},'%'))
     </if>
+    <include refid="Factor"></include>
   </select>
   <select id="selectAllGoods" resultMap="ResultMapWithBLOBs">
     select * from goods
   </select>
   <select id="getGoodsByUserId" resultMap="ResultMapWithBLOBs">
     select * from goods where user_id = #{user_id,jdbcType=INTEGER}
+    <include refid="Factor"></include>
   </select>
 
   <select id="selectByCatelogOrderByDate" resultMap="ResultMapWithBLOBs">
     select * from goods
     where catelog_id = #{catelogId,jdbcType=INTEGER}
-    <include refid="Factor"></include>
+    order by polish_time DESC
     limit #{limit,jdbcType=INTEGER}
   </select>
 
