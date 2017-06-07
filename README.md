@@ -20,7 +20,9 @@
 
 
 **开发人员：** [L-75](http://blog.csdn.net/llwwlql)、[HLK_1135](http://blog.csdn.net/HLK_1135)、[BezosLee](https://www.makeco.cn/)
+
 **项目分工：** 按照功能进行模块化开发，每人负责的模块要兼顾前端+后台。
-**项目源码：**[Squirrel校园二手交易](https://github.com/hlk-1135/squirrel)
+
+**项目源码：**[https://github.com/hlk-1135/squirrel](https://github.com/hlk-1135/squirrel)
 
 **注：前端页面仿站复旦大学二手交易平台：**[复旦大学二手工坊](http://www.fudan.market/)
