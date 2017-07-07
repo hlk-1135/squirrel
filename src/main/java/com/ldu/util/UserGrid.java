@@ -10,8 +10,26 @@ import java.util.List;
  */
 public class UserGrid {
 
-    private List<User> data;
-    private int total;
+    private int current;//当前页面号
+    private int rowCount;//每页行数
+    private int total;//总行数
+    private List<User> rows;
+
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
+    }
+
+    public int getRowCount() {
+        return rowCount;
+    }
+
+    public void setRowCount(int rowCount) {
+        this.rowCount = rowCount;
+    }
 
     public int getTotal() {
         return total;
@@ -21,11 +39,11 @@ public class UserGrid {
         this.total = total;
     }
 
-    public List<User> getData() {
-        return data;
+    public List<User> getRows() {
+        return rows;
     }
 
-    public void setData(List<User> data) {
-        this.data = data;
+    public void setRows(List<User> rows) {
+        this.rows = rows;
     }
 }

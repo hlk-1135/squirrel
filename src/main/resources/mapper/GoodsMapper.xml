@@ -23,7 +23,7 @@
     describle
   </sql>
   <sql id="Factor">
-    and end_time >= now() order by polish_time DESC
+--     and end_time >= now() order by polish_time DESC
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select
@@ -55,7 +55,6 @@
   </select>
   <select id="getGoodsByUserId" resultMap="ResultMapWithBLOBs">
     select * from goods where user_id = #{user_id,jdbcType=INTEGER}
-    <include refid="Factor"></include>
   </select>
 
   <select id="selectByCatelogOrderByDate" resultMap="ResultMapWithBLOBs">

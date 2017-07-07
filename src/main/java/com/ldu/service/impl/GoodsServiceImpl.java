@@ -35,16 +35,16 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     public Goods getGoodsByPrimaryKey(Integer goodsId) {
-        Goods goods = this.goodsMapper.selectByPrimaryKey(goodsId);
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
         return goods;
     }
 
     public void deleteGoodsByPrimaryKey(Integer id) {
-        this.goodsMapper.deleteByPrimaryKey(id);
+        goodsMapper.deleteByPrimaryKey(id);
     }
 
     public List<Goods> getAllGoods() {
-        List<Goods> goods = this.goodsMapper.selectAllGoods();
+        List<Goods> goods = goodsMapper.selectAllGoods();
         return goods;
     }
 
